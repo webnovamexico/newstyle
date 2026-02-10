@@ -8,15 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* --- ESTILOS GENERALES --- */
+        /* --- CONFIGURACIÓN MAESTRA --- */
         :root {
-            --bg-dark: #0a0a0a;
-            --bg-panel: #161616;
-            --accent: #FF4500; /* Naranja quemado elegante */
+            --bg-dark: #050505;
+            --bg-panel: #111111;
+            --accent: #2962FF; /* Azul Eléctrico */
             --text-main: #ffffff;
-            --text-gray: #b0b0b0;
             --font-title: 'Montserrat', sans-serif;
             --font-body: 'Open Sans', sans-serif;
         }
@@ -33,75 +33,72 @@
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
-        /* --- BOTONES --- */
-        .btn {
+        /* --- MARQUEE (CINTA AZUL) --- */
+        .marquee-container {
             background: var(--accent);
-            color: #fff;
-            padding: 16px 32px;
-            font-family: var(--font-title);
-            font-weight: 700;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.3s;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
-        }
-
-        .btn:hover {
-            background: #fff;
-            color: #000;
-            transform: translateY(-2px);
-        }
-
-        .section-title {
-            font-family: var(--font-title);
-            font-weight: 900;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 50px;
-            text-transform: uppercase;
             color: white;
-            letter-spacing: -1px;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            z-index: 1002;
         }
         
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--accent);
-            margin: 15px auto 0;
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
         }
 
-        /* --- HEADER --- */
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* --- HEADER & MENÚ HAMBURGUESA --- */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 5%;
-            background: rgba(10,10,10,0.95);
-            border-bottom: 1px solid #333;
+            background: rgba(5,5,5,0.9);
+            border-bottom: 1px solid #222;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
         }
 
-        .logo { font-family: var(--font-title); font-size: 1.5rem; font-weight: 900; }
+        .logo { font-family: var(--font-title); font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; }
         .logo span { color: var(--accent); }
-        nav ul { display: flex; gap: 30px; }
-        nav a { font-weight: 600; text-transform: uppercase; font-size: 0.9rem; }
-        nav a:hover { color: var(--accent); }
+
+        .menu-toggle { cursor: pointer; font-size: 2rem; color: white; transition: 0.3s; }
+        .menu-toggle:hover { color: var(--accent); }
+
+        /* Pantalla Completa del Menú */
+        .fullscreen-menu {
+            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
+            background: rgba(0,0,0,0.98); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; transition: 0.5s ease-in-out; z-index: 2000;
+        }
+        .fullscreen-menu.active { right: 0; }
+        .close-btn { position: absolute; top: 30px; right: 5%; font-size: 3rem; cursor: pointer; color: #555; }
+        .close-btn:hover { color: var(--accent); }
+        .fullscreen-menu ul li { margin: 20px 0; text-align: center; }
+        .fullscreen-menu a { font-family: var(--font-title); font-size: 2.5rem; font-weight: 900; text-transform: uppercase; color: #fff; }
+        .fullscreen-menu a:hover { color: var(--accent); letter-spacing: 5px; }
 
         /* --- HERO --- */
         .hero {
-            height: 80vh;
+            height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=2070&auto=format&fit=crop');
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(5,5,5,1)), url('https://lh3.googleusercontent.com/gps-cs-s/AHVAwerHXEnv9NvCRqnOGaGsoYObjMl3cyHwMeZR8Zvb4infCnK17YVpfp3FwQILfoUcYGOHStjPpvW2aYGvIJ6yNQjuGFJ1lZ7JNjPIjCNcxUASOoDIjiLAL9x51R2bOhzhbty14p88WA=s680-w680-h510-rw');
             background-size: cover;
             background-position: center;
         }
@@ -109,211 +106,146 @@
         .hero-content h1 {
             font-family: var(--font-title);
             font-weight: 900;
-            font-size: 4rem;
-            line-height: 1.1;
+            font-size: 6rem;
+            line-height: 0.9;
             text-transform: uppercase;
             margin-bottom: 20px;
+            letter-spacing: -3px;
+            text-shadow: 4px 4px 0px var(--accent);
         }
 
-        /* --- LISTA DE PRECIOS (NUEVO DISEÑO) --- */
+        .btn {
+            background: var(--accent); color: #fff; padding: 18px 40px;
+            font-family: var(--font-title); font-weight: 700; text-transform: uppercase;
+            border: none; cursor: pointer; border-radius: 50px; transition: 0.3s;
+            display: inline-block; box-shadow: 0 0 20px rgba(41, 98, 255, 0.4); margin-top: 20px;
+        }
+        .btn:hover { background: #fff; color: var(--accent); transform: scale(1.05); }
+
+        /* --- SECCIÓN GALERÍA --- */
+        .gallery-section { padding: 80px 5%; background: var(--bg-dark); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .gallery-item { height: 350px; overflow: hidden; border-radius: 8px; position: relative; border: 1px solid #222; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: grayscale(100%) contrast(1.1); }
+        .gallery-item:hover img { transform: scale(1.1); filter: grayscale(0%); }
+
+        /* --- PRECIOS --- */
         .services { padding: 80px 5%; background: var(--bg-panel); }
-        
-        .services-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 30px; 
-        }
-        
-        .price-card {
-            background: var(--bg-dark);
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #222;
-            transition: 0.3s;
-        }
-
-        .price-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .price-card h3 {
-            font-family: var(--font-title);
-            color: var(--accent);
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            font-weight: 800;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-        }
-
-        .price-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px dotted #333;
-            font-size: 0.95rem;
-        }
-
-        .price-item:last-child { border: none; margin: 0; }
-        .service-name { color: #fff; font-weight: 600; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .price-card { background: var(--bg-dark); padding: 30px; border: 1px solid #222; transition: 0.3s; position: relative; overflow: hidden; }
+        .price-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); transform: scaleY(0); transition: 0.3s; }
+        .price-card:hover::before { transform: scaleY(1); }
+        .price-card:hover { transform: translateY(-5px); border-color: #333; }
+        .price-item { display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #333; padding-bottom: 8px; font-size: 0.9rem;}
         .service-cost { color: var(--accent); font-weight: 700; font-family: var(--font-title); }
+        .price-card h3 { color: white; font-family: var(--font-title); margin-bottom: 20px; font-size: 1.4rem; text-transform: uppercase;}
 
-        /* --- BOOKING SECTION --- */
+        /* --- BOOKING --- */
         .booking-section { padding: 80px 5%; background: #000; }
-        .booking-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; max-width: 1200px; margin: 0 auto; }
-        
-        .modern-input {
-            width: 100%; padding: 15px; margin-bottom: 20px;
-            background: #222; border: 1px solid #333; color: white;
-            font-family: var(--font-body); border-radius: 4px;
-        }
+        .booking-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; max-width: 1400px; margin: 0 auto; }
+        .modern-input { width: 100%; padding: 15px; margin-bottom: 20px; background: #111; border: 1px solid #333; color: white; font-family: var(--font-body); }
+        .modern-input:focus { border-color: var(--accent); outline: none; }
 
-        /* --- HORARIOS --- */
-        .info-section { padding: 80px 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: var(--bg-dark); }
-        .hours-box { padding: 40px; background: #111; display: flex; flex-direction: column; justify-content: center; }
-        .hours-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #222; font-family: var(--font-title); font-weight: 700; }
-        .map-box { height: 100%; min-height: 400px; }
-        iframe { width: 100%; height: 100%; border: 0; filter: grayscale(100%) invert(92%) contrast(83%); }
-
-        footer { padding: 40px 5%; text-align: center; border-top: 1px solid #222; color: #666; }
+        /* --- FOOTER & FLOAT --- */
+        footer { padding: 60px 5%; background: #080808; border-top: 1px solid #222; text-align: center; }
+        .float-wa { position: fixed; bottom: 30px; right: 30px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); z-index: 1000; transition: 0.3s; }
+        .float-wa:hover { transform: scale(1.1); }
 
         @media (max-width: 900px) {
             .booking-layout { grid-template-columns: 1fr; }
-            .info-section { grid-template-columns: 1fr; }
-            nav { display: none; }
-            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content h1 { font-size: 3.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <div class="marquee-container">
+        <div class="marquee-content">
+            NEW STYLE BARBER SHOP • TLAQUEPAQUE • AGENDA TU CITA • ESTILO URBANO • CORTES MODERNOS • WALK-INS WELCOME • 
+            NEW STYLE BARBER SHOP • TLAQUEPAQUE • AGENDA TU CITA • ESTILO URBANO • CORTES MODERNOS • WALK-INS WELCOME •
+        </div>
+    </div>
+
     <header>
         <div class="logo">NEW STYLE<span>BARBER</span></div>
-        <nav>
-            <ul>
-                <li><a href="#servicios">Precios</a></li>
-                <li><a href="#booking">Citas</a></li>
-                <li><a href="#ubicacion">Ubicación</a></li>
-            </ul>
-        </nav>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     </header>
+
+    <div class="fullscreen-menu" id="fullMenu">
+        <div class="close-btn" onclick="toggleMenu()">×</div>
+        <ul>
+            <li><a href="#" onclick="toggleMenu()">Inicio</a></li>
+            <li><a href="#servicios" onclick="toggleMenu()">Precios</a></li>
+            <li><a href="#galeria" onclick="toggleMenu()">Lookbook</a></li>
+            <li><a href="#booking" onclick="toggleMenu()">Reservar</a></li>
+        </ul>
+        <div style="margin-top: 30px; color: #555;">TLAQUEPAQUE, JALISCO</div>
+    </div>
 
     <section class="hero">
         <div class="hero-content">
-            <span style="color:var(--accent); letter-spacing:3px; font-weight:700;">TLAQUEPAQUE, JAL.</span>
-            <h1>CALIDAD QUE<br>SE NOTA</h1>
-            <a href="#booking" class="btn">AGENDAR AHORA</a>
+            <h4 style="color:var(--accent); letter-spacing:4px; margin-bottom:10px; font-weight:700;">TLAQUEPAQUE, JAL.</h4>
+            <h1>NEWSTYLE</h1>
+            <p style="color:white; font-size:1.2rem; margin-bottom:20px;">CORTES DE NIVEL</p>
+            <a href="#booking" class="btn">RESERVAR TURNO</a>
+        </div>
+    </section>
+
+    <section id="galeria" class="gallery-section">
+        <h2 class="section-title" style="text-align:center; color:white; font-family:var(--font-title); font-size:2.5rem; margin-bottom:40px;">EL <span style="color:var(--accent);">LOOKBOOK</span></h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://i.pinimg.com/222x/c3/66/07/c366078aae5836135753e575ed01ad15.jpg" alt="Corte Urbano 1"></div>
+            <div class="gallery-item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3f94npSXuNwub_4ztagZ0k_EVLCcvBWg6AA&s" alt="Corte Urbano 2"></div>
+            <div class="gallery-item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIkn9UpMWYYZRKx56y9SScRNkGCpazgnP3Iw&s" alt="Corte Urbano 3"></div>
+            <div class="gallery-item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcIVAVm3p5FbHPHHrky20MR8xsEN0SCiFjrw&s" alt="Corte Urbano 4"></div>
         </div>
     </section>
 
     <section id="servicios" class="services">
-        <h2 class="section-title">NUESTROS PRECIOS</h2>
-        
         <div class="services-grid">
-            
             <div class="price-card">
-                <h3>Cortes & Ceja</h3>
-                <div class="price-item">
-                    <span class="service-name">Corte de Cabello</span>
-                    <span class="service-cost">$150</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Corte + Ceja</span>
-                    <span class="service-cost">$180</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Diseño de Ceja</span>
-                    <span class="service-cost">$30</span>
-                </div>
+                <h3>CORTES</h3>
+                <div class="price-item"><span class="service-name">Corte Cabello</span><span class="service-cost">$150</span></div>
+                <div class="price-item"><span class="service-name">Corte + Ceja</span><span class="service-cost">$180</span></div>
+                <div class="price-item"><span class="service-name">Diseño Ceja</span><span class="service-cost">$30</span></div>
             </div>
-
             <div class="price-card">
-                <h3>Barba & Combos</h3>
-                <div class="price-item">
-                    <span class="service-name">Perfilado de Barba</span>
-                    <span class="service-cost">$100</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Corte + Barba</span>
-                    <span class="service-cost">$230</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Corte + Barba + Ceja</span>
-                    <span class="service-cost">$250</span>
-                </div>
+                <h3>BARBA</h3>
+                <div class="price-item"><span class="service-name">Perfilado</span><span class="service-cost">$100</span></div>
+                <div class="price-item"><span class="service-name">Corte + Barba</span><span class="service-cost">$230</span></div>
+                <div class="price-item"><span class="service-name">Corte + Barba + Ceja</span><span class="service-cost">$250</span></div>
             </div>
-
-            <div class="price-card" style="border-color:var(--accent);">
-                <h3>Rituales & Faciales</h3>
-                <div class="price-item">
-                    <span class="service-name">Limpieza Facial</span>
-                    <span class="service-cost">$100</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Barba + Facial</span>
-                    <span class="service-cost">$180</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Corte + Facial</span>
-                    <span class="service-cost">$230</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Corte + Barba + Facial</span>
-                    <span class="service-cost">$320</span>
-                </div>
-                <div class="price-item" style="color:var(--accent);">
-                    <span class="service-name">PAQUETE COMPLETO (Todo)</span>
-                    <span class="service-cost">$350</span>
-                </div>
+            <div class="price-card" style="border: 1px solid var(--accent);">
+                <h3 style="color:var(--accent);">RITUALES VIP</h3>
+                <div class="price-item"><span class="service-name">Limpieza Facial</span><span class="service-cost">$100</span></div>
+                <div class="price-item"><span class="service-name">Barba + Facial</span><span class="service-cost">$180</span></div>
+                <div class="price-item"><span class="service-name">Corte + Facial</span><span class="service-cost">$230</span></div>
+                <div class="price-item"><span class="service-name">PAQUETE COMPLETO</span><span class="service-cost">$350</span></div>
             </div>
-
             <div class="price-card">
-                <h3>Productos & Extras</h3>
-                <div class="price-item">
-                    <span class="service-name">Cera para Peinar</span>
-                    <span class="service-cost">$150</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Aceite para Barba</span>
-                    <span class="service-cost">$100</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Minoxidil (Tratamiento)</span>
-                    <span class="service-cost">$280</span>
-                </div>
-                <div class="price-item">
-                    <span class="service-name">Tinte (Barba o Cabello)</span>
-                    <span class="service-cost">$30</span>
-                </div>
+                <h3>EXTRAS</h3>
+                <div class="price-item"><span class="service-name">Cera</span><span class="service-cost">$150</span></div>
+                <div class="price-item"><span class="service-name">Minoxidil</span><span class="service-cost">$280</span></div>
+                <div class="price-item"><span class="service-name">Tinte</span><span class="service-cost">$30</span></div>
             </div>
-
         </div>
     </section>
 
     <section id="booking" class="booking-section">
-        <h2 class="section-title">RESERVA TU LUGAR</h2>
-        
         <div class="booking-layout">
-            
             <div>
-                <h4 style="color:white; margin-bottom:15px; font-family:var(--font-title);">1. ELIGE HORA EN CALENDARIO</h4>
-                <div style="background:white; border-radius:8px; overflow:hidden; height:600px;">
+                <h2 style="color:white; font-family:var(--font-title); font-size:2rem; margin-bottom:20px;">1. AGENDA EN EL CALENDARIO</h2>
+                <div style="background:white; border-radius:10px; overflow:hidden; height:600px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
                     <iframe src="https://calendar.app.google/g1FSJLizzd8jdZsD9?gv=true" style="border: 0" width="100%" height="100%" frameborder="0"></iframe>
                 </div>
             </div>
-
-            <div>
-                <h4 style="color:white; margin-bottom:15px; font-family:var(--font-title);">2. CONFIRMA DETALLES</h4>
-                <div style="background:#1a1a1a; padding:30px; border-radius:8px; border:1px solid #333;">
+            <div style="display:flex; flex-direction:column; justify-content:center;">
+                <div style="background:#111; padding:40px; border-radius:10px; border:1px solid #222;">
+                    <h2 style="color:white; font-family:var(--font-title); font-size:2rem; margin-bottom:20px;">2. CONFIRMA TU CORTE</h2>
+                    <p style="color:#888; margin-bottom:20px;">Para asegurar tu lugar, envíanos los detalles por WhatsApp.</p>
                     <form onsubmit="enviarWhatsApp(event)">
-                        <label style="color:#888; display:block; margin-bottom:5px;">Tu Nombre</label>
-                        <input type="text" id="nombre" class="modern-input" placeholder="Ej: Daniel" required>
-                        
-                        <label style="color:#888; display:block; margin-bottom:5px;">Servicio</label>
-                        <select id="servicio" class="modern-input">
+                        <input type="text" id="nombre" class="modern-input" placeholder="TU NOMBRE" required>
+                        <select id="servicio" class="modern-input" style="background:#111;">
                             <option value="Corte ($150)">Corte ($150)</option>
                             <option value="Corte + Barba ($230)">Corte + Barba ($230)</option>
                             <option value="Corte + Barba + Ceja ($250)">Corte + Barba + Ceja ($250)</option>
@@ -321,44 +253,34 @@
                             <option value="Corte + Facial ($230)">Corte + Facial ($230)</option>
                             <option value="Solo Barba ($100)">Solo Barba ($100)</option>
                         </select>
-
-                        <label style="color:#888; display:block; margin-bottom:5px;">Hora Elegida</label>
                         <input type="time" id="hora" class="modern-input" required>
-
-                        <button type="submit" class="btn" style="width:100%;">ENVIAR A WHATSAPP ➔</button>
+                        <button type="submit" class="btn" style="width:100%;">ENVIAR WHATSAPP <i class="fab fa-whatsapp"></i></button>
                     </form>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <section id="ubicacion" class="info-section">
-        <div class="hours-box">
-            <h3 style="font-family:var(--font-title); font-size:2rem; margin-bottom:30px; color:white;">HORARIOS</h3>
-            <div class="hours-row"><span>Lunes - Viernes</span><span style="color:var(--accent);">10:00 AM – 9:00 PM</span></div>
-            <div class="hours-row"><span>Sábado</span><span style="color:var(--accent);">10:00 AM – 8:00 PM</span></div>
-            <div class="hours-row"><span>Domingo</span><span style="color:var(--accent);">10:00 AM – 5:00 PM</span></div>
-        </div>
-        <div class="map-box">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3733.864754881765!2d-103.3887034!3d20.6133481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b21c45555555%3A0x123456789!2sBalcones%20de%20Santa%20Mar%C3%ADa%2C%20Tlaquepaque!5e0!3m2!1ses!2smx!4v1700000000000" loading="lazy"></iframe>
-        </div>
+    <section id="ubicacion" style="height:400px; filter: grayscale(100%) invert(92%) contrast(83%);">
+         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3733.864754881765!2d-103.3887034!3d20.6133481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b21c45555555%3A0x123456789!2sBalcones%20de%20Santa%20Mar%C3%ADa%2C%20Tlaquepaque!5e0!3m2!1ses!2smx!4v1700000000000" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
     </section>
 
     <footer>
-        <h3 style="color:white; font-family:var(--font-title);">NEW STYLE BARBER SHOP</h3>
-        <p>Balcones de Santa María, Tlaquepaque, Jal.</p>
-        <p style="margin-top:20px; color:var(--accent);">WhatsApp: 33 3304 6837</p>
+        <div class="logo" style="margin-bottom:20px;">NEW STYLE<span>BARBER</span></div>
+        <p style="color:#666;">Balcones de Santa María, Tlaquepaque, Jal.</p>
     </footer>
 
+    <a href="https://wa.me/5213333046837" class="float-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
     <script>
+        function toggleMenu() { document.getElementById('fullMenu').classList.toggle('active'); }
         function enviarWhatsApp(e) {
             e.preventDefault();
             const nombre = document.getElementById('nombre').value;
             const servicio = document.getElementById('servicio').value;
             const hora = document.getElementById('hora').value;
             const telefono = "5213333046837"; 
-            const mensaje = `Hola NEW STYLE, ya agendé.%0A%0A👤 *Cliente:* ${nombre}%0A💈 *Servicio:* ${servicio}%0A⏰ *Hora:* ${hora}`;
+            const mensaje = `Hola NEW STYLE, reservé en el calendario.%0A%0A👤 *Cliente:* ${nombre}%0A💈 *Servicio:* ${servicio}%0A⏰ *Hora:* ${hora}`;
             window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
         }
     </script>
