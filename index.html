@@ -142,11 +142,19 @@
         .service-cost { color: var(--accent); font-weight: 700; font-family: var(--font-title); }
         .price-card h3 { color: white; font-family: var(--font-title); margin-bottom: 20px; font-size: 1.4rem; text-transform: uppercase;}
 
-        /* --- BOOKING --- */
+        /* --- BOOKING (NUEVO ESTILO) --- */
         .booking-section { padding: 80px 5%; background: #000; }
-        .booking-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; max-width: 1400px; margin: 0 auto; }
-        .modern-input { width: 100%; padding: 15px; margin-bottom: 20px; background: #111; border: 1px solid #333; color: white; font-family: var(--font-body); }
+        .booking-container { max-width: 800px; margin: 0 auto; background: #111; padding: 50px; border-radius: 15px; border: 1px solid #222; box-shadow: 0 10px 40px rgba(41, 98, 255, 0.1); }
+        
+        .modern-input { 
+            width: 100%; padding: 18px; margin-bottom: 20px; 
+            background: #050505; border: 1px solid #333; color: white; 
+            font-family: var(--font-body); font-size: 1rem; border-radius: 8px;
+        }
         .modern-input:focus { border-color: var(--accent); outline: none; }
+        
+        /* Ajuste para calendario oscuro */
+        input[type="date"] { color-scheme: dark; }
 
         /* --- FOOTER & FLOAT --- */
         footer { padding: 60px 5%; background: #080808; border-top: 1px solid #222; text-align: center; }
@@ -154,8 +162,8 @@
         .float-wa:hover { transform: scale(1.1); }
 
         @media (max-width: 900px) {
-            .booking-layout { grid-template-columns: 1fr; }
             .hero-content h1 { font-size: 3.5rem; }
+            .booking-container { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -234,32 +242,41 @@
     </section>
 
     <section id="booking" class="booking-section">
-        <div class="booking-layout">
-            <div>
-                <h2 style="color:white; font-family:var(--font-title); font-size:2rem; margin-bottom:20px;">1. AGENDA EN EL CALENDARIO</h2>
-                <div style="background:white; border-radius:10px; overflow:hidden; height:600px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-                    <iframe src="https://calendar.app.google/g1FSJLizzd8jdZsD9?gv=true" style="border: 0" width="100%" height="100%" frameborder="0"></iframe>
-                </div>
+        <div class="booking-container">
+            <div style="text-align:center; margin-bottom:30px;">
+                <h2 style="color:white; font-family:var(--font-title); font-size:2.5rem; text-transform: uppercase;">Agenda <span style="color:var(--accent);">Tu Cita</span></h2>
+                <p style="color:#888; margin-top:10px;">Llena los datos y envíanos tu solicitud directa por WhatsApp.</p>
             </div>
-            <div style="display:flex; flex-direction:column; justify-content:center;">
-                <div style="background:#111; padding:40px; border-radius:10px; border:1px solid #222;">
-                    <h2 style="color:white; font-family:var(--font-title); font-size:2rem; margin-bottom:20px;">2. CONFIRMA TU CORTE</h2>
-                    <p style="color:#888; margin-bottom:20px;">Para asegurar tu lugar, envíanos los detalles por WhatsApp.</p>
-                    <form onsubmit="enviarWhatsApp(event)">
-                        <input type="text" id="nombre" class="modern-input" placeholder="TU NOMBRE" required>
-                        <select id="servicio" class="modern-input" style="background:#111;">
-                            <option value="Corte ($150)">Corte ($150)</option>
-                            <option value="Corte + Barba ($230)">Corte + Barba ($230)</option>
-                            <option value="Corte + Barba + Ceja ($250)">Corte + Barba + Ceja ($250)</option>
-                            <option value="Paquete Completo ($350)">Paquete Completo VIP ($350)</option>
-                            <option value="Corte + Facial ($230)">Corte + Facial ($230)</option>
-                            <option value="Solo Barba ($100)">Solo Barba ($100)</option>
-                        </select>
+            
+            <form onsubmit="enviarWhatsApp(event)">
+                <label style="color:#aaa; font-size:0.9rem; margin-bottom:5px; display:block;">NOMBRE COMPLETO</label>
+                <input type="text" id="nombre" class="modern-input" placeholder="Ej. Juan Pérez" required>
+                
+                <label style="color:#aaa; font-size:0.9rem; margin-bottom:5px; display:block;">¿QUÉ TE HACEMOS?</label>
+                <select id="servicio" class="modern-input" style="background:#050505;">
+                    <option value="Corte ($150)">Corte ($150)</option>
+                    <option value="Corte + Barba ($230)">Corte + Barba ($230)</option>
+                    <option value="Corte + Barba + Ceja ($250)">Corte + Barba + Ceja ($250)</option>
+                    <option value="Paquete Completo ($350)">Paquete Completo VIP ($350)</option>
+                    <option value="Corte + Facial ($230)">Corte + Facial ($230)</option>
+                    <option value="Solo Barba ($100)">Solo Barba ($100)</option>
+                </select>
+
+                <div style="display:flex; gap:15px; flex-wrap:wrap;">
+                    <div style="flex:1; min-width: 150px;">
+                        <label style="color:#aaa; font-size:0.9rem; margin-bottom:5px; display:block;">FECHA</label>
+                        <input type="date" id="fecha" class="modern-input" required>
+                    </div>
+                    <div style="flex:1; min-width: 150px;">
+                        <label style="color:#aaa; font-size:0.9rem; margin-bottom:5px; display:block;">HORA PREFERIDA</label>
                         <input type="time" id="hora" class="modern-input" required>
-                        <button type="submit" class="btn" style="width:100%;">ENVIAR WHATSAPP <i class="fab fa-whatsapp"></i></button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+
+                <button type="submit" class="btn" style="width:100%; font-size:1.2rem; margin-top:10px;">
+                    AGENDAR POR WHATSAPP <i class="fab fa-whatsapp" style="margin-left:10px;"></i>
+                </button>
+            </form>
         </div>
     </section>
 
@@ -276,13 +293,18 @@
 
     <script>
         function toggleMenu() { document.getElementById('fullMenu').classList.toggle('active'); }
+        
         function enviarWhatsApp(e) {
             e.preventDefault();
             const nombre = document.getElementById('nombre').value;
             const servicio = document.getElementById('servicio').value;
+            const fecha = document.getElementById('fecha').value;
             const hora = document.getElementById('hora').value;
             const telefono = "5213333046837"; 
-            const mensaje = `Hola NEW STYLE, reservé en el calendario.%0A%0A👤 *Cliente:* ${nombre}%0A💈 *Servicio:* ${servicio}%0A⏰ *Hora:* ${hora}`;
+            
+            // Mensaje formateado
+            const mensaje = `Hola NEW STYLE, quiero agendar una cita.%0A%0A👤 *Cliente:* ${nombre}%0A💈 *Servicio:* ${servicio}%0A📅 *Fecha:* ${fecha}%0A⏰ *Hora:* ${hora}`;
+            
             window.open(`https://wa.me/${telefono}?text=${mensaje}`, '_blank');
         }
     </script>
